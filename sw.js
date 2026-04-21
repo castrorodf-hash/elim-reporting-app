@@ -1,4 +1,4 @@
-const CACHE_NAME = 'elim-app-cache-v3.8';
+const CACHE_NAME = 'elim-app-cache-v3.7';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

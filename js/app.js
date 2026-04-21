@@ -1999,141 +1999,94 @@ const App = {
             const isCoord = activeMode === 'coordinador';
 
             const modeLabel = isCoord ? 'Coordinador' : (isAdmin ? 'Pastor' : 'Discipulador');
-            const modeColor = isCoord ? '#7c3aed' : (isAdmin ? '#059669' : '#2563eb');
+            const modeColor = isCoord ? 'var(--primary-alt)' : (isAdmin ? '#059669' : '#2563EB');
+
             const isFriday = new Date().getDay() === 5;
 
-            // --- Lógica de Acciones ---
             let actionsHtml = '';
+            // ... (rest of actions logic remains same but we'll include it in the replace block)
             if (activeMode === 'discipulador') {
                 if (stats.isReporter !== false) {
                     actionsHtml += `
-                        <a href="#/reporte" class="action-card-premium">
-                            <div class="action-card-main">
-                                <div class="action-icon-circle" style="background: #eff6ff; color: #2563eb;">📝</div>
-                                <div class="action-info">
-                                    <h4>Crear Reporte</h4>
-                                    <p>Pasar asistencia semanal</p>
-                                </div>
-                            </div>
-                            <span class="action-arrow">→</span>
+                        <a href="#/reporte" class="action-card">
+                            <div class="action-card-icon" style="background:rgba(79,106,254,0.1); color:var(--primary-alt);">📝</div>
+                            <div class="action-card-text"><h4>Crear Reporte</h4><p>Pasar asistencia semanal</p></div>
                         </a>
                     `;
                 }
                 actionsHtml += `
-                    <a href="#/historial" class="action-card-premium">
-                        <div class="action-card-main">
-                            <div class="action-icon-circle" style="background: #eef2ff; color: #6366f1;">📋</div>
-                            <div class="action-info">
-                                <h4>Historial</h4>
-                                <p>Ver reportes enviados</p>
-                            </div>
-                        </div>
-                        <span class="action-arrow">→</span>
+                    <a href="#/historial" class="action-card">
+                        <div class="action-card-icon" style="background:rgba(99,102,241,0.1); color:#6366f1;">📋</div>
+                        <div class="action-card-text"><h4>Historial</h4><p>Ver reportes enviados</p></div>
                     </a>`;
             }
             if (isCoord) {
                 actionsHtml += `
-                    <a href="#/estructura" class="action-card-premium">
-                        <div class="action-card-main">
-                            <div class="action-icon-circle" style="background: #f5f3ff; color: #7c3aed;">👥</div>
-                            <div class="action-info">
-                                <h4>Mi Estructura</h4>
-                                <p>Gestionar discipuladores</p>
-                            </div>
-                        </div>
-                        <span class="action-arrow">→</span>
+                    <a href="#/estructura" class="action-card">
+                        <div class="action-card-icon" style="background:rgba(124,58,237,0.1); color:#7C3AED;">👥</div>
+                        <div class="action-card-text"><h4>Mi Estructura</h4><p>Gestionar discipuladores</p></div>
                     </a>`;
             }
             actionsHtml += `
-                <a href="#/estadisticas" class="action-card-premium">
-                    <div class="action-card-main">
-                        <div class="action-icon-circle" style="background: #fffbeb; color: #d97706;">📊</div>
-                        <div class="action-info">
-                            <h4>Estadísticas</h4>
-                            <p>Análisis de asistencia</p>
-                        </div>
-                    </div>
-                    <span class="action-arrow">→</span>
+                <a href="#/estadisticas" class="action-card">
+                    <div class="action-card-icon" style="background:rgba(245,158,11,0.1); color:#F59E0B;">📊</div>
+                    <div class="action-card-text"><h4>Estadísticas</h4><p>Análisis de asistencia</p></div>
                 </a>`;
             if (isAdmin) {
                 actionsHtml += `
-                    <a href="#/admin" class="action-card-premium">
-                        <div class="action-card-main">
-                            <div class="action-icon-circle" style="background: #ecfdf5; color: #059669;">⚙️</div>
-                            <div class="action-info">
-                                <h4>Administración</h4>
-                                <p>Ajustes globales</p>
-                            </div>
-                        </div>
-                        <span class="action-arrow">→</span>
-                    </a>
-                    <a href="#/reporte-sector" class="action-card-premium">
-                        <div class="action-card-main">
-                            <div class="action-icon-circle" style="background: #f5f3ff; color: #7c3aed;">📈</div>
-                            <div class="action-info">
-                                <h4>Reporte Sectores</h4>
-                                <p>Resumen administrativo</p>
-                            </div>
-                        </div>
-                        <span class="action-arrow">→</span>
+                    <a href="#/admin" class="action-card">
+                        <div class="action-card-icon" style="background:rgba(5,150,105,0.1); color:#059669;">⚙️</div>
+                        <div class="action-card-text"><h4>Administración</h4><p>Ajustes globales</p></div>
+                    </a>`;
+                actionsHtml += `
+                    <a href="#/reporte-sector" class="action-card">
+                        <div class="action-card-icon" style="background:rgba(124,58,237,0.1); color:#7C3AED;">📊</div>
+                        <div class="action-card-text"><h4>Reporte por Sectores</h4><p>Resumen semanal por sector</p></div>
                     </a>`;
             } else if (isCoord) {
                 actionsHtml += `
-                    <a href="#/reporte-sector" class="action-card-premium">
-                        <div class="action-card-main">
-                            <div class="action-icon-circle" style="background: #f5f3ff; color: #7c3aed;">📈</div>
-                            <div class="action-info">
-                                <h4>Reporte Sector</h4>
-                                <p>Resumen semanal</p>
-                            </div>
-                        </div>
-                        <span class="action-arrow">→</span>
+                    <a href="#/reporte-sector" class="action-card">
+                        <div class="action-card-icon" style="background:rgba(124,58,237,0.1); color:#7C3AED;">📊</div>
+                        <div class="action-card-text"><h4>Reporte por Sector</h4><p>Resumen semanal de asistencia</p></div>
                     </a>`;
             }
 
+            // Alerta de reportes pendientes
             const pendingAlertHtml = stats.pendingCount > 0 ? `
-                <div class="dashboard-banner alert animate-reveal">
-                    <div class="banner-content">
-                        <div class="banner-icon-bg" style="background: #fef3c7; color: #d97706;">⚠️</div>
-                        <div class="banner-text">
-                            <h4>Reportes Pendientes</h4>
-                            <p>Tienes <b>${stats.pendingCount} reportes</b> por enviar. Por favor complétalos.</p>
-                        </div>
+                <div class="glass" style="background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border: 1px solid #FCD34D; padding: 20px; border-radius: 20px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <span style="font-size: 32px;">⚠️</span>
+                    <div>
+                        <h4 style="color: #92400E; margin: 0 0 4px 0;">Atención Discipulador</h4>
+                        <p style="color: #B45309; font-size: 14px; margin: 0;">Tienes <strong>${stats.pendingCount} reportes pendientes</strong> de envío. Por favor, complétalos a la brevedad.</p>
                     </div>
-                    <a href="#/reporte" class="banner-action-btn">Completar</a>
                 </div>
             ` : '';
 
             return `
-                <div class="view-container" style="background: #f7f8fb; min-height: 100vh;">
-                    <div class="dashboard-top-nav">
-                        <div class="nav-user-info">
-                            <div class="nav-avatar-circle" style="background: linear-gradient(135deg, ${modeColor}, #1e40af);">${user.name.charAt(0)}</div>
-                            <div class="nav-user-details">
-                                <h2>Dios te bendiga, ${user.name.split(' ')[0]}</h2>
-                                <div class="role-badge" style="background:${modeColor}15; color:${modeColor};">
-                                    <span class="dot" style="background:${modeColor};"></span>
-                                    ${modeLabel}
-                                </div>
-                            </div>
+                <div class="view-container">
+                    <header class="header dashboard-header-pc">
+                        <div class="header-user">
+                            <p style="font-weight:700; text-transform:uppercase; font-size:10px; letter-spacing:0.15em; margin-bottom:4px; opacity: 0.8;">Resumen General</p>
+                            <h2 style="">Dios te bendiga, ${user.name}</h2>
                         </div>
-                        <div class="nav-actions">
+                        <div class="header-actions">
                             ${user.allRoles.length > 1 ? `
-                                <button class="icon-btn-nav" id="switchModeBtn" title="Cambiar Rol">⇄</button>
+                                <button class="btn-role-switcher" id="switchModeBtn">
+                                    <span class="icon-badge">⇄</span>
+                                    <span class="btn-label">Cambiar Rol</span>
+                                </button>
                             ` : ''}
-                            <button class="icon-btn-nav logout" id="logoutBtn" title="Salir">🚪</button>
+                            <button id="logoutBtn" class="btn-logout">Salir</button>
                         </div>
-                    </div>
+                    </header>
 
-                    <div class="dashboard-scroll-content">
+                    <div class="dashboard-content">
                         ${stats.isFreeWeek ? `
-                            <div class="dashboard-banner success animate-reveal">
-                                <div class="banner-content">
-                                    <div class="banner-icon-bg" style="background: #ecfdf5; color: #059669;">🏖️</div>
-                                    <div class="banner-text">
-                                        <h4>Semana de Descanso</h4>
-                                        <p>No se requiere envío de reportes administrativos esta semana.</p>
-                                    </div>
+                            <div class="glass status-banner-success animate-reveal">
+                                <div class="status-banner-icon">🏖️</div>
+                                <div class="status-banner-text">
+                                    <h4>Semana de Descanso</h4>
+                                    <p>No se requiere el envío de reportes para esta semana.</p>
                                 </div>
                             </div>
                         ` : ''}
@@ -2141,117 +2094,105 @@ const App = {
                         ${!stats.isFreeWeek ? pendingAlertHtml : ''}
                         
                         ${!stats.isFreeWeek && isFriday ? `
-                            <div class="dashboard-banner info animate-reveal">
-                                <div class="banner-content">
-                                    <div class="banner-icon-bg" style="background: #eff6ff; color: #2563eb;">📅</div>
-                                    <div class="banner-text">
-                                        <h4>Recordatorio</h4>
-                                        <p>Mañana sábado es día de reporte. ¡Prepara tu información!</p>
-                                    </div>
+                            <div class="glass status-banner-info">
+                                <div class="status-banner-icon">📅</div>
+                                <div class="status-banner-text">
+                                    <h4>Recordatorio de Viernes</h4>
+                                    <p>Tienes un reporte disponible para mañana sábado.</p>
                                 </div>
                             </div>
                         ` : ''}
 
-                        <div class="metrics-section animate-reveal">
-                            <h3 class="section-label">Resumen de Actividad</h3>
-                            ${stats.isExec ? `
-                                <div class="exec-card-premium">
-                                    <div class="exec-header">
-                                        <div class="exec-title">
-                                            <h4>Análisis Pastoral</h4>
-                                            <p>Datos en tiempo real del sector</p>
-                                        </div>
-                                        <div class="live-indicator"><span class="pulse"></span> En vivo</div>
+                        ${stats.isExec ? `
+                            <div class="metric-card executive-summary-card animate-reveal">
+                                <div class="card-header-flex">
+                                    <h3>Análisis Semanal</h3>
+                                    <span class="live-badge">En vivo</span>
+                                </div>
+                                
+                                <div class="executive-metrics-grid">
+                                    <div class="exec-metric sent">
+                                        <div class="val">${stats.reportsSent === undefined ? '--' : stats.reportsSent}</div>
+                                        <div class="label">Reportes Hechos</div>
                                     </div>
-                                    <div class="exec-body">
-                                        <div class="exec-stat-item">
-                                            <div class="stat-value">${stats.reportsSent === undefined ? '--' : stats.reportsSent}</div>
-                                            <div class="stat-label">Reportes<br>Recibidos</div>
-                                        </div>
-                                        <div class="exec-divider"></div>
-                                        <div class="exec-stat-item">
-                                            <div class="stat-value danger">${stats.missingReports === undefined ? '--' : stats.missingReports}</div>
-                                            <div class="stat-label">Reportes<br>Faltantes</div>
-                                        </div>
-                                    </div>
-                                    <div class="exec-footer">
-                                        <div class="exec-day-mini">
-                                            <span class="day">Viernes:</span> <b>${stats.attFriday || 0}</b> <small>asist.</small>
-                                        </div>
-                                        <div class="exec-day-mini">
-                                            <span class="day">Sábado:</span> <b>${stats.attSaturday || 0}</b> <small>asist.</small>
-                                        </div>
+                                    <div class="exec-metric missing">
+                                        <div class="val">${stats.missingReports === undefined ? '--' : stats.missingReports}</div>
+                                        <div class="label">Faltantes</div>
                                     </div>
                                 </div>
-                            ` : `
-                                <div class="metrics-row">
-                                    <div class="metric-card-minimal">
-                                        <div class="m-val">${stats.attendance || '--'}</div>
-                                        <div class="m-label">Asistencia Promedio</div>
-                                    </div>
-                                    <div class="metric-card-minimal">
-                                        <div class="m-val">${stats.reports || '--'}</div>
-                                        <div class="m-label">Reportes Éxitosos</div>
-                                    </div>
-                                </div>
-                            `}
-                        </div>
 
-                        <div class="dashboard-actions-section animate-reveal" style="animation-delay: 0.1s;">
-                            <h3 class="section-label">Herramientas</h3>
-                            <div class="action-grid-premium">
-                                ${actionsHtml}
+                                <div class="attendance-breakdown-row">
+                                    <div class="day-stat">
+                                        <div class="val">${stats.attFriday === undefined ? '--' : stats.attFriday} <span>ovejas</span></div>
+                                        <div class="label">Viernes</div>
+                                    </div>
+                                    <div class="day-stat">
+                                        <div class="val">${stats.attSaturday === undefined ? '--' : stats.attSaturday} <span>ovejas</span></div>
+                                        <div class="label">Sábado</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        ${stats.isExec && stats.repeatedAbsences && stats.repeatedAbsences.length > 0 ? `
-                            <div class="intelligence-section animate-reveal" style="animation-delay: 0.2s;">
-                                <div class="intelligence-card-premium">
-                                    <div class="i-header">
-                                        <span class="i-icon">💡</span>
-                                        <h4>Alertas de Seguimiento</h4>
-                                    </div>
-                                    <p class="i-desc">Personas con ausencias persistentes (2+ semanas):</p>
-                                    <div class="i-list">
+                            
+                            ${stats.repeatedAbsences && stats.repeatedAbsences.length > 0 ? `
+                                <div class="glass warning-intelligence-card animate-reveal">
+                                    <h4><span>⚠️</span> Inteligencia Pastoral</h4>
+                                    <p>Ovejas con ausencias consecutivas:</p>
+                                    <div class="intelligence-list">
                                         ${stats.repeatedAbsences.map(s => `
-                                            <div class="i-item">
-                                                <div class="i-name">👤 ${s.name}</div>
-                                                <div class="i-badge">${s.count} semanas</div>
+                                            <div class="intelligence-item">
+                                                <span class="name">${s.name}</span>
+                                                <span class="count-badge">${s.count} semanas</span>
                                             </div>
                                         `).join('')}
                                     </div>
-                                    <a href="#/estadisticas" class="i-footer-btn">Ver análisis completo →</a>
+                                    <div class="card-footer-link">
+                                        <a href="#/estadisticas">Ver análisis completo <span class="footer-arrow">→</span></a>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        ` : `
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <h3>${stats.attendance || '--'}</h3>
+                                    <p>Asistencia Promedio</p>
+                                </div>
+                                <div class="metric-card">
+                                    <h3>${stats.reports || '--'}</h3>
+                                    <p>Reportes Enviados</p>
                                 </div>
                             </div>
-                        ` : ''}
+                        `}
+
+                        <div class="section-group">
+                            <h3 class="section-title">Accesos Rápidos <span class="mode-badge">${modeLabel}</span></h3>
+                            <div class="action-grid">${actionsHtml}</div>
+                        </div>
 
                         ${!stats.isExec ? `
-                            <div class="structure-preview animate-reveal" style="animation-delay: 0.2s;">
-                                <h3 class="section-label">Mi Sector</h3>
-                                <div class="structure-card">
-                                    <div class="s-main-info">
-                                        <div class="s-avatar">${user.sector?.charAt(0) || 'S'}</div>
-                                        <div class="s-text">
-                                            <h4>${user.sector || 'Mi Sector'}</h4>
-                                            <p>Responsable: ${user.name}</p>
-                                        </div>
+                        <div style="margin-top:40px;">
+                            <h3 class="section-title" style="margin-bottom:20px;">Detalles de la Estructura</h3>
+                            <div class="data-table-container">
+                                <div class="data-row" style="background:#F8FAFC; border-radius:16px 16px 0 0; font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">
+                                    <span>Sector / Discipulador</span>
+                                    <span>Estado General</span>
+                                    <span>Rendimiento</span>
+                                    <span>Acción</span>
+                                </div>
+                                <div class="data-row">
+                                    <div class="data-info">
+                                        <div class="sector-avatar sm" style="background:var(--primary-alt);">1</div>
+                                        <div><div class="data-title">${user.sector}</div><div class="data-subtitle">Discipulador: ${user.name}</div></div>
                                     </div>
-                                    <div class="s-stats">
-                                        <div class="s-progress-container">
-                                            <div class="s-progress-label">
-                                                <span>Fidelidad de Reporte</span>
-                                                <b>${stats.attendance || '0%'}</b>
-                                            </div>
-                                            <div class="s-progress-track">
-                                                <div class="s-progress-fill" style="width: ${stats.attendance}; background: ${modeColor};"></div>
-                                            </div>
-                                        </div>
+                                    <div class="progress-mini-wrapper">
+                                        <div class="progress-mini-bar"><div class="progress-mini-fill" style="width:${stats.attendance}; background:var(--primary-alt);"></div></div>
+                                        <div style="font-size:10px; font-weight:700; color:var(--text-muted);">Eficiencia de reporte</div>
                                     </div>
+                                    <div style="font-weight:700; color:var(--primary); font-size: 13px;">Óptimo</div>
+                                    <div><a href="#/reporte" class="pill pill-success" style="font-size:10px; padding:6px 10px; text-decoration:none;">IR A REPORTE</a></div>
                                 </div>
                             </div>
+                        </div>
                         ` : ''}
-                        
-                        <div style="height: 120px;"></div>
                     </div>
                 </div>
             `;
