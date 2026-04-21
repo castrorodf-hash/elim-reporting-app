@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport for Mobile-First -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Elim Reporting</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#0F172A">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="./css/style.css?v=3.7">
+    <link rel="icon" type="image/png" href="./assets/icons/icon-192x192.png">
+</head>
+
+<body>
+    <!-- Splash de Carga Global (Resiliencia) -->
+    <div id="global-loader"
+        style="position:fixed; top:0; left:0; width:100%; height:100%; background:#0F172A; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; transition: opacity 0.5s ease;">
+        <img src="./assets/icons/icon-192x192.png" alt="Logo Elim"
+            style="width:80px; height:80px; margin-bottom:24px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.3);">
+        <div
+            style="width:40px; height:40px; border:3px solid rgba(255,255,255,0.1); border-top-color:#3B82F6; border-radius:50%; animation: spin 1s linear infinite;">
+        </div>
+        <p
+            style="color:white; margin-top:20px; font-family:'Inter', sans-serif; font-size:14px; opacity:0.7; letter-spacing:1px;">
+            ELIM REPORTING</p>
+    </div>
+
+    <style>
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden-loader {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+
+    <!-- Contenedor Principal de la SPA -->
+    <div id="app"></div>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Backend Services -->
+    <script src="./js/services/supabaseClient.js"></script>
+
+    <!-- Base JS -->
+    <script src="./js/app.js?v=3.7"></script>
+
+    <!-- Service Worker Registration & Initialization -->
+    <script>
+        // Ocultar loader cuando la app esté lista
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('global-loader');
+            setTimeout(() => {
+                if (window.App && window.App.init) {
+                    window.App.init().then(() => {
+                        loader.classList.add('hidden-loader');
+                        setTimeout(() => loader.remove(), 500);
+                    });
+                } else {
+                    loader.innerHTML = '<div style="color:white; padding:20px; text-align:center;"><h3>⚠️ Error Crítico</h3><p>No se pudo cargar el motor de la aplicación.</p><button onclick="location.reload()" style="background:#3B82F6; color:white; border:none; padding:10px 20px; border-radius:8px; margin-top:10px;">Reintentar</button></div>';
+                }
+            }, 500);
+        });
+
+        // Registro de PWA Resiliente con Control de Versiones
+        if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+            let refreshing = false;
+            
+            // 1. Detectar cambio de controlador (se activa tras el skipWaiting)
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (refreshing) return;
+                refreshing = true;
+                window.location.reload();
+            });
+
+            // 2. Función para mostrar el aviso de versión nueva (Premium UI)
+            const showUpdateToast = (reg) => {
+                // Evitar duplicados
+                if (document.getElementById('pwa-update-toast')) return;
+
+                const toast = document.createElement('div');
+                toast.id = 'pwa-update-toast';
+                toast.className = 'update-toast';
+                toast.innerHTML = `
+                    <p><span>✨</span> Nueva versión disponible</p>
+                    <button class="btn-update" id="btnUpdateNow">Actualizar ahora</button>
+                `;
+                document.body.appendChild(toast);
+
+                document.getElementById('btnUpdateNow').onclick = () => {
+                    if (reg.waiting) {
+                        reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                    }
+                    toast.remove();
+                };
+            };
+
+            // 3. Registro y detección de estados
+            navigator.serviceWorker.register('./sw.js').then(reg => {
+                // A) Si ya hay un worker esperando (ej: el usuario recargó pero no actualizó antes)
+                if (reg.waiting) {
+                    showUpdateToast(reg);
+                }
+
+                // B) Detectar cuando llega una actualización nueva
+                reg.onupdatefound = () => {
+                    const installingWorker = reg.installing;
+                    installingWorker.onstatechange = () => {
+                        if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            showUpdateToast(reg);
+                        }
+                    };
+                };
+            });
+
+            // 4. Forzar revisión periódica al volver a la app (UX Móvil)
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    navigator.serviceWorker.getRegistration().then(reg => {
+                        if (reg) reg.update();
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
